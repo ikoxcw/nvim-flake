@@ -295,6 +295,12 @@
         action = "^";
         options.silent = true;
       }
+      {
+        mode = "v";
+        key = "p";
+        action = "\"_dP";
+        options.silent = true;
+      }
     ];
   };
 }

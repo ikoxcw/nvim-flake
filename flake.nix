@@ -9,7 +9,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
-    nil.url = "github:oxalica/nil";
     nixd.url = "github:nix-community/nixd";
     pre-commit-hooks.url = "github:cachix/pre-commit-hooks.nix";
   };
@@ -17,6 +16,7 @@
   outputs = inputs@{ nixpkgs, nixvim, ... }:
     let
       nvim-config = import ./config;
+      lazy-nvim-config = import ./config/lazy.nix;
     in
     inputs.flake-parts.lib.mkFlake { inherit inputs; } {
       imports = [
@@ -31,14 +31,17 @@
             inherit pkgs;
             module = nvim-config;
           };
+          lazynvim = nixvim'.makeNixvimWithModule {
+            inherit pkgs;
+            module = lazy-nvim-config;
+          };
         in
         {
           _module.args.pkgs = import inputs.nixpkgs {
             inherit system;
             overlays = [
-              # inputs.neovim-nightly-overlay.overlay
+              inputs.neovim-nightly-overlay.overlay
               inputs.nixd.overlays.default
-              # inputs.nil.overlays.default
             ];
           };
           checks = {
@@ -51,6 +54,7 @@
           packages = {
             default = nvim;
             nvim = nvim;
+            lazynvim = lazynvim;
           };
           formatter = pkgs.nixpkgs-fmt;
           devShells = {
