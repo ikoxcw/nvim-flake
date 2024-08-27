@@ -6,7 +6,8 @@
     ./lsp/none-ls.nix
     ./tabline/bufferline.nix
     ./statusline/lualine.nix
-    ./colorscheme/nord.nix
+    ./colorscheme/catppuccin.nix
+    # ./colorscheme/nord.nix
     ./motion/flash.nix
     ./indent/indent-blankline.nix
     ./terminal/toggleterm.nix
