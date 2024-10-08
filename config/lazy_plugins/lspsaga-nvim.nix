@@ -17,7 +17,7 @@
              win_width = 25,
           },
        })
-       vim.cmd([[ colorscheme nord ]])
+       vim.cmd([[ colorscheme catppuccin ]])
 
        local keymap = vim.keymap.set
 
